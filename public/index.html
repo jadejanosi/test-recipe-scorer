@@ -594,11 +594,17 @@ function displayResults(r) {
 
 function resetTool() {
   document.getElementById('results').classList.remove('show');
+  document.getElementById('email-gate').classList.remove('show');
+  document.getElementById('loading').classList.remove('show');
   document.getElementById('form-section').style.display = 'block';
   document.getElementById('main-input').value = '';
   if (document.getElementById('secondary-input')) {
     document.getElementById('secondary-input').value = '';
   }
+  document.getElementById('gate-email').value = '';
+  document.getElementById('gate-error').classList.remove('show');
+  document.getElementById('gate-btn').disabled = false;
+  document.getElementById('gate-btn').textContent = 'Send My Score';
   document.getElementById('score-bars').innerHTML = '';
   document.getElementById('insight-grid').innerHTML = '';
   document.getElementById('error-box').classList.remove('show');
