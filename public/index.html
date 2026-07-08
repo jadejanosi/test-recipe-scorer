@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- CUSTOMIZE: Change this to your tool name -->
+<title>NOVA Scorer Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     NOVA BRAND TOKENS — UPDATE THESE WITH YOUR OWN VALUES
+     from your Brand Token Cheatsheet (Module 5.1)
+     ============================================================ */
+  :root {
+    --primary:      #1D9E75;  /* YOUR primary color */
+    --primary-dark: #166d52;  /* YOUR primary hover color */
+    --dark:         #0F172A;  /* YOUR dark/text color */
+    --light-bg:     #E3F8F9;  /* YOUR light background */
+    --mid-bg:       #CCF2F3;  /* YOUR mid background */
+    --border:       #9FE1CB;  /* YOUR border color */
+    --gray-bg:      #F8FAFB;
+    --gray-text:    #6B7280;
+    --grad:         linear-gradient(135deg, #054e6f 0%, #095c6e 50%, #0a696b 100%);
+    --radius:       10px;     /* YOUR border radius */
+    --heading-font: 'Be Vietnam Pro', sans-serif;  /* YOUR heading font */
+    --body-font:    'Nunito Sans', sans-serif;     /* YOUR body font */
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--body-font);
+    font-size: 16px;
+    background: #f0f4f8;
+    color: var(--dark);
+    margin: 0;
+    padding: 24px 16px 48px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+  }
+
+  /* HEADER — update text content below */
+  .header {
+    background: var(--grad);
+    padding: 40px 44px 32px;
+    position: relative; overflow: hidden;
+  }
+  .header::after {
+    content: ''; position: absolute;
+    bottom: -30px; right: -30px;
+    width: 160px; height: 160px;
+    border-radius: 50%; background: rgba(255,255,255,0.05);
+  }
+  .tool-tag {
+    font-family: var(--heading-font);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--border); margin-bottom: 8px;
+  }
+  .header h1 {
+    font-family: var(--heading-font);
+    font-weight: 900; font-size: 30px;
+    color: #fff; line-height: 1.15; margin-bottom: 8px;
+  }
+  .header-sub {
+    font-size: 15px; color: var(--mid-bg);
+    line-height: 1.6; max-width: 480px;
+  }
+  /* CUSTOMIZE: add your credibility signal here */
+  .credibility {
+    font-size: 12px; color: rgba(255,255,255,0.55);
+    margin-top: 14px; font-style: italic;
+  }
+
+  /* BODY */
+  .body { padding: 36px 44px 44px; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: var(--heading-font);
+    font-weight: 800; font-size: 11px;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: #fff; background: var(--dark);
+    padding: 8px 16px; border-radius: 6px;
+    margin-bottom: 16px; margin-top: 28px; display: block;
+  }
+
+  /* CRITERIA PREVIEW */
+  .criteria-row {
+    display: grid;
+    /* CUSTOMIZE: change repeat(5) to match your criteria count */
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px; margin-bottom: 28px;
+  }
+  .criterion-item {
+    background: var(--gray-bg);
+    border: 1.5px solid var(--mid-bg);
+    border-radius: var(--radius);
+    padding: 12px 10px; text-align: center;
+  }
+  .criterion-icon { font-size: 20px; margin-bottom: 6px; }
+  .criterion-name {
+    font-family: var(--heading-font);
+    font-size: 10px; font-weight: 700;
+    color: #054e6f; text-transform: uppercase;
+    letter-spacing: 0.5px; line-height: 1.3;
+  }
+  .criterion-max { font-size: 11px; color: var(--gray-text); margin-top: 3px; }
+
+  /* FORM */
+  .field-group { margin-bottom: 18px; }
+  .field-label {
+    font-family: var(--heading-font);
+    font-size: 11px; font-weight: 700;
+    color: #054e6f; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 6px; display: block;
+  }
+  .field-hint {
+    font-size: 13px; color: var(--gray-text);
+    font-style: italic; margin-bottom: 8px; line-height: 1.5;
+  }
+  textarea.fi, input.fi {
+    width: 100%;
+    background: var(--gray-bg);
+    border: 1.5px solid var(--mid-bg);
+    border-radius: 8px;
+    font-family: var(--body-font);
+    font-size: 15px; color: var(--dark);
+    padding: 12px 14px; outline: none;
+    resize: none; transition: border-color 0.2s;
+    display: block; -webkit-appearance: none;
+  }
+  textarea.fi { height: 100px; line-height: 1.6; }
+  textarea.fi:focus, input.fi:focus {
+    border-color: var(--primary); background: #f0fdf9;
+  }
+  textarea.fi::placeholder, input.fi::placeholder {
+    color: #B0BEC5; font-style: italic; font-size: 14px;
+  }
+
+  /* EMAIL GATE */
+  .email-gate {
+    display: none;
+    background: var(--light-bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px; margin-top: 20px; text-align: center;
+  }
+  .email-gate.show { display: block; }
+  .gate-title {
+    font-family: var(--heading-font);
+    font-size: 18px; font-weight: 800;
+    color: var(--dark); margin-bottom: 8px;
+  }
+  .gate-sub {
+    font-size: 14px; color: var(--gray-text);
+    margin-bottom: 16px; line-height: 1.6;
+  }
+  .gate-row { display: flex; gap: 10px; }
+  .gate-input {
+    flex: 1;
+    background: #fff;
+    border: 1.5px solid var(--mid-bg);
+    border-radius: 8px;
+    font-family: var(--body-font);
+    font-size: 15px; color: var(--dark);
+    padding: 12px 14px; outline: none;
+    transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  .gate-input:focus { border-color: var(--primary); }
+  .gate-input::placeholder { color: #B0BEC5; font-style: italic; }
+
+  /* BUTTONS */
+  .btn-primary {
+    background: var(--primary); color: #fff;
+    border: none; border-radius: 8px;
+    font-family: var(--heading-font);
+    font-size: 15px; font-weight: 800;
+    padding: 13px 28px; cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap;
+  }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary:disabled { background: var(--border); cursor: not-allowed; }
+
+  .submit-wrap { margin-top: 24px; }
+
+  /* LOADING */
+  .loading { display: none; text-align: center; padding: 40px 0; }
+  .loading.show { display: block; }
+  .spinner {
+    width: 44px; height: 44px;
+    border: 4px solid var(--mid-bg);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text {
+    font-family: var(--heading-font);
+    font-size: 15px; font-weight: 700; color: var(--gray-text);
+  }
+
+  /* RESULTS */
+  .results { display: none; }
+  .results.show { display: block; }
+
+  /* VERDICT BANNER */
+  .verdict-banner {
+    border-radius: 12px; padding: 24px 28px;
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .verdict-banner.go { background: #D1FAE5; border: 2px solid var(--primary); }
+  .verdict-banner.maybe { background: #FEF3C7; border: 2px solid #F59E0B; }
+  .verdict-banner.nogo { background: #FEE2E2; border: 2px solid #EF4444; }
+  .verdict-icon { font-size: 40px; flex-shrink: 0; }
+  .verdict-content { flex: 1; }
+  .verdict-label {
+    font-family: var(--heading-font);
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px;
+  }
+  .verdict-banner.go .verdict-label { color: #065F46; }
+  .verdict-banner.maybe .verdict-label { color: #92400E; }
+  .verdict-banner.nogo .verdict-label { color: #991B1B; }
+  .verdict-title {
+    font-family: var(--heading-font);
+    font-size: 22px; font-weight: 900;
+    color: var(--dark); margin-bottom: 4px;
+  }
+  .verdict-desc { font-size: 14px; color: #374151; line-height: 1.6; }
+  .total-score { text-align: center; flex-shrink: 0; }
+  .score-big {
+    font-family: var(--heading-font);
+    font-weight: 900; font-size: 48px;
+    color: var(--dark); line-height: 1;
+  }
+  .score-denom {
+    font-family: var(--heading-font);
+    font-size: 14px; color: var(--gray-text); font-weight: 700;
+  }
+  .score-label {
+    font-size: 10px; color: var(--gray-text);
+    text-transform: uppercase; letter-spacing: 1px; margin-top: 3px;
+  }
+
+  /* SCORE BARS */
+  .score-bar-item {
+    background: var(--gray-bg);
+    border: 1.5px solid var(--mid-bg);
+    border-radius: var(--radius);
+    padding: 14px 18px; margin-bottom: 10px;
+  }
+  .score-bar-header {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 8px;
+  }
+  .score-bar-name {
+    font-family: var(--heading-font);
+    font-size: 13px; font-weight: 700; color: var(--dark);
+    display: flex; align-items: center; gap: 7px;
+  }
+  .score-bar-val {
+    font-family: var(--heading-font);
+    font-size: 17px; font-weight: 900; color: var(--dark);
+  }
+  .bar-track {
+    height: 7px; background: var(--mid-bg);
+    border-radius: 99px; overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; border-radius: 99px;
+    transition: width 1s ease; width: 0%;
+  }
+  .bar-fill.high { background: var(--grad); }
+  .bar-fill.mid { background: linear-gradient(90deg, #F59E0B, #EAB308); }
+  .bar-fill.low { background: linear-gradient(90deg, #EF4444, #F97316); }
+  .bar-feedback {
+    font-size: 13px; color: var(--gray-text);
+    margin-top: 7px; line-height: 1.5; font-style: italic;
+  }
+
+  /* INSIGHT CARDS */
+  .insight-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-top: 4px;
+  }
+  .insight-card {
+    border-radius: var(--radius); padding: 16px 18px;
+    border: 1.5px solid var(--mid-bg);
+  }
+  .insight-card.strength { background: #D1FAE5; border-color: var(--border); }
+  .insight-card.fix { background: #FEE2E2; border-color: #FECACA; }
+  .insight-label {
+    font-family: var(--heading-font);
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .insight-card.strength .insight-label { color: #065F46; }
+  .insight-card.fix .insight-label { color: #991B1B; }
+  .insight-text { font-size: 14px; line-height: 1.65; color: var(--dark); }
+
+  /* RESET */
+  .reset-btn {
+    background: transparent; color: var(--primary);
+    border: 2px solid var(--primary); border-radius: 8px;
+    font-family: var(--heading-font);
+    font-size: 14px; font-weight: 700;
+    padding: 11px 28px; cursor: pointer;
+    transition: all 0.2s; margin-top: 20px;
+  }
+  .reset-btn:hover { background: var(--light-bg); }
+
+  /* ERROR */
+  .error-box {
+    background: #FEE2E2; border: 1.5px solid #FECACA;
+    border-radius: 8px; padding: 14px 18px;
+    font-size: 14px; color: #991B1B;
+    display: none; margin-top: 14px; line-height: 1.6;
+  }
+  .error-box.show { display: block; }
+
+  /* FOOTER */
+  .footer {
+    background: var(--dark); padding: 14px 44px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 28px;
+  }
+  .footer-brand {
+    font-family: var(--heading-font);
+    font-weight: 900; font-size: 14px; color: var(--border); letter-spacing: 1px;
+  }
+  .footer-url { font-size: 12px; color: var(--mid-bg); opacity: 0.6; }
+
+  @media (max-width: 600px) {
+    .body { padding: 24px 20px 32px; }
+    .header { padding: 28px 20px 24px; }
+    .footer { padding: 14px 20px; flex-direction: column; gap: 6px; }
+    .criteria-row { grid-template-columns: repeat(3, 1fr); }
+    .verdict-banner { flex-direction: column; text-align: center; }
+    .insight-grid { grid-template-columns: 1fr; }
+    .gate-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <!-- CUSTOMIZE: Update brand tag, title, subtitle, credibility signal -->
+    <div class="tool-tag">Your Brand Name</div>
+    <h1>Your Scorer Tool Name</h1>
+    <div class="header-sub">One sentence describing what this tool scores and what the user gets back.</div>
+    <div class="credibility">Built by [Your Name] — [Your credibility signal]</div>
+  </div>
+
+  <div class="body">
+
+    <!-- CUSTOMIZE: Update criteria icons, names, and count to match your tool -->
+    <div class="criteria-row">
+      <div class="criterion-item">
+        <div class="criterion-icon">🎯</div>
+        <div class="criterion-name">Criterion One</div>
+        <div class="criterion-max">/ 10</div>
+      </div>
+      <div class="criterion-item">
+        <div class="criterion-icon">🔥</div>
+        <div class="criterion-name">Criterion Two</div>
+        <div class="criterion-max">/ 10</div>
+      </div>
+      <div class="criterion-item">
+        <div class="criterion-icon">💎</div>
+        <div class="criterion-name">Criterion Three</div>
+        <div class="criterion-max">/ 10</div>
+      </div>
+      <div class="criterion-item">
+        <div class="criterion-icon">📊</div>
+        <div class="criterion-name">Criterion Four</div>
+        <div class="criterion-max">/ 10</div>
+      </div>
+      <div class="criterion-item">
+        <div class="criterion-icon">⚡</div>
+        <div class="criterion-name">Criterion Five</div>
+        <div class="criterion-max">/ 10</div>
+      </div>
+    </div>
+
+    <div id="form-section">
+      <div class="section-title">Tell Us About Your [Thing Being Scored]</div>
+
+      <!-- CUSTOMIZE: Update label, hint, and placeholder for your tool -->
+      <div class="field-group">
+        <span class="field-label">Your main input label</span>
+        <div class="field-hint">A hint that tells users exactly what to type and how detailed to be.</div>
+        <textarea class="fi" id="main-input"
+          placeholder="Placeholder text that shows an example of good input..."></textarea>
+      </div>
+
+      <!-- CUSTOMIZE: Add or remove additional input fields as needed -->
+      <div class="field-group">
+        <span class="field-label">Optional second input label</span>
+        <div class="field-hint">Hint for what goes here.</div>
+        <input type="text" class="fi" id="secondary-input"
+          placeholder="Optional secondary input...">
+      </div>
+
+      <div class="submit-wrap">
+        <button class="btn-primary" id="submit-btn" onclick="handleSubmit()">
+          Get My Score →
+        </button>
+      </div>
+      <div class="error-box" id="error-box">
+        Please fill in the required fields before scoring.
+      </div>
+    </div>
+
+    <!-- EMAIL GATE — shows after form submission, before result -->
+    <div class="email-gate" id="email-gate">
+      <div class="gate-title">Your score is ready.</div>
+      <!-- CUSTOMIZE: Update this copy for your tool -->
+      <div class="gate-sub">Enter your email to receive your full scored breakdown.</div>
+      <div class="gate-row">
+        <input type="email" class="gate-input" id="gate-email"
+          placeholder="your@email.com">
+        <button class="btn-primary" id="gate-btn" onclick="handleGate()">
+          Send My Score
+        </button>
+      </div>
+      <div class="error-box" id="gate-error">
+        Please enter a valid email address.
+      </div>
+    </div>
+
+    <!-- LOADING STATE -->
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <!-- CUSTOMIZE: Update loading text for your tool -->
+      <div class="loading-text">Scoring your [thing]... about 10 seconds.</div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results" id="results">
+      <div class="section-title">Your Results</div>
+
+      <div class="verdict-banner go" id="verdict-banner">
+        <div class="verdict-icon" id="verdict-icon"></div>
+        <div class="verdict-content">
+          <div class="verdict-label" id="verdict-label"></div>
+          <div class="verdict-title" id="verdict-title"></div>
+          <div class="verdict-desc" id="verdict-desc"></div>
+        </div>
+        <div class="total-score">
+          <div class="score-big" id="score-num">—</div>
+          <!-- CUSTOMIZE: Update /50 to match your total possible score -->
+          <div class="score-denom">/ 50</div>
+          <div class="score-label">Total Score</div>
+        </div>
+      </div>
+
+      <div id="score-bars"></div>
+
+      <div class="insight-grid" id="insight-grid"></div>
+
+      <button class="reset-btn" onclick="resetTool()">Score Something Else</button>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <!-- CUSTOMIZE: Update brand name and URL -->
+    <div class="footer-brand">YOUR BRAND</div>
+    <div class="footer-url">yourwebsite.com</div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// CUSTOMIZE: Update these arrays to match your criteria
+// Order must match the JSON keys in your system prompt
+// ============================================================
+const CRITERIA = [
+  { key: 'criterion_one',   label: 'Criterion One',   icon: '🎯' },
+  { key: 'criterion_two',   label: 'Criterion Two',   icon: '🔥' },
+  { key: 'criterion_three', label: 'Criterion Three', icon: '💎' },
+  { key: 'criterion_four',  label: 'Criterion Four',  icon: '📊' },
+  { key: 'criterion_five',  label: 'Criterion Five',  icon: '⚡' },
+];
+
+// ============================================================
+// CUSTOMIZE: Update verdict logic to match your tool
+// ============================================================
+function getVerdictStyle(verdict) {
+  const v = verdict.toLowerCase();
+  if (v.includes('excellent') || v.includes('strong') || v.includes('go')) {
+    return { cls: 'go', icon: '🚀', label: 'Verdict' };
+  } else if (v.includes('rethink') || v.includes('weak') || v.includes('poor')) {
+    return { cls: 'nogo', icon: '🔧', label: 'Verdict' };
+  }
+  return { cls: 'maybe', icon: '⚡', label: 'Verdict' };
+}
+
+let pendingResult = null;
+
+async function handleSubmit() {
+  const mainInput = document.getElementById('main-input').value.trim();
+  const secondaryInput = document.getElementById('secondary-input')?.value.trim() || '';
+  const errorBox = document.getElementById('error-box');
+  const btn = document.getElementById('submit-btn');
+
+  errorBox.classList.remove('show');
+
+  // CUSTOMIZE: Add validation for your required fields
+  if (!mainInput) {
+    errorBox.textContent = 'Please fill in the required field before scoring.';
+    errorBox.classList.add('show');
+    return;
+  }
+
+  // Show email gate before making the API call
+  document.getElementById('form-section').style.display = 'none';
+  document.getElementById('email-gate').classList.add('show');
+
+  // Store inputs for use after email is collected
+  // CUSTOMIZE: Update this to include all your input fields
+  pendingResult = {
+    userInput: `Main input: ${mainInput}\nAdditional info: ${secondaryInput}`
+  };
+}
+
+async function handleGate() {
+  const email = document.getElementById('gate-email').value.trim();
+  const gateError = document.getElementById('gate-error');
+  const gateBtn = document.getElementById('gate-btn');
+
+  gateError.classList.remove('show');
+
+  if (!email || !email.includes('@')) {
+    gateError.classList.add('show');
+    return;
+  }
+
+  gateBtn.disabled = true;
+  gateBtn.textContent = 'Scoring...';
+  document.getElementById('email-gate').classList.remove('show');
+  document.getElementById('loading').classList.add('show');
+
+  // CUSTOMIZE: Replace with your email platform API call
+  // See Module 4 Lesson 4.5 for the email capture implementation
+  // await captureEmail(email);
+
+  try {
+    const response = await fetch('/api/score', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userInput: pendingResult.userInput })
+    });
+
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'Error');
+    displayResults(result);
+
+  } catch (err) {
+    document.getElementById('loading').classList.remove('show');
+    document.getElementById('form-section').style.display = 'block';
+    const errorBox = document.getElementById('error-box');
+    errorBox.textContent = 'Something went wrong. Please try again.';
+    errorBox.classList.add('show');
+    gateBtn.disabled = false;
+    gateBtn.textContent = 'Send My Score';
+  }
+}
+
+function displayResults(r) {
+  document.getElementById('loading').classList.remove('show');
+
+  // Set verdict banner
+  const style = getVerdictStyle(r.verdict || '');
+  const banner = document.getElementById('verdict-banner');
+  banner.className = `verdict-banner ${style.cls}`;
+  document.getElementById('verdict-icon').textContent = style.icon;
+  document.getElementById('verdict-label').textContent = style.label;
+  document.getElementById('verdict-title').textContent = r.verdict || '—';
+  document.getElementById('verdict-desc').textContent = r.top_strength || '';
+  document.getElementById('score-num').textContent = r.total || '—';
+
+  // Score bars
+  const barsEl = document.getElementById('score-bars');
+  barsEl.innerHTML = '';
+  CRITERIA.forEach(c => {
+    const item = r[c.key];
+    if (!item) return;
+    const score = item.score || 0;
+    const pct = (score / 10) * 100;
+    const fillCls = score >= 8 ? 'high' : score >= 5 ? 'mid' : 'low';
+    barsEl.innerHTML += `
+      <div class="score-bar-item">
+        <div class="score-bar-header">
+          <div class="score-bar-name">${c.icon} ${c.label}</div>
+          <div class="score-bar-val">${score} / 10</div>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill ${fillCls}" style="width:0%"
+            data-pct="${pct}"></div>
+        </div>
+        <div class="bar-feedback">${item.feedback || ''}</div>
+      </div>`;
+  });
+
+  // Insights
+  document.getElementById('insight-grid').innerHTML = `
+    <div class="insight-card strength">
+      <div class="insight-label">Top Strength</div>
+      <div class="insight-text">${r.top_strength || '—'}</div>
+    </div>
+    <div class="insight-card fix">
+      <div class="insight-label">Priority Fix</div>
+      <div class="insight-text">${r.priority_fix || '—'}</div>
+    </div>`;
+
+  document.getElementById('results').classList.add('show');
+
+  // Animate bars
+  setTimeout(() => {
+    document.querySelectorAll('.bar-fill').forEach(bar => {
+      bar.style.width = bar.dataset.pct + '%';
+    });
+  }, 100);
+}
+
+function resetTool() {
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('form-section').style.display = 'block';
+  document.getElementById('main-input').value = '';
+  if (document.getElementById('secondary-input')) {
+    document.getElementById('secondary-input').value = '';
+  }
+  document.getElementById('score-bars').innerHTML = '';
+  document.getElementById('insight-grid').innerHTML = '';
+  document.getElementById('error-box').classList.remove('show');
+  document.getElementById('submit-btn').disabled = false;
+  pendingResult = null;
+  window.scrollTo(0, 0);
+}
+
+// Allow Enter key to submit
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.ctrlKey) handleSubmit();
+});
+</script>
+</body>
+</html>
