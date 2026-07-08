@@ -3,27 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- CUSTOMIZE: Change this to your tool name -->
-<title>Recipe Scorer</title>
+<title>The Recipe Balance Score</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  /* ============================================================
-     NOVA BRAND TOKENS — UPDATE THESE WITH YOUR OWN VALUES
-     from your Brand Token Cheatsheet (Module 5.1)
-     ============================================================ */
   :root {
-    --primary:      #1D9E75;  /* YOUR primary color */
-    --primary-dark: #166d52;  /* YOUR primary hover color */
-    --dark:         #0F172A;  /* YOUR dark/text color */
-    --light-bg:     #E3F8F9;  /* YOUR light background */
-    --mid-bg:       #CCF2F3;  /* YOUR mid background */
-    --border:       #9FE1CB;  /* YOUR border color */
+    --primary:      #1D9E75;
+    --primary-dark: #166d52;
+    --dark:         #0F172A;
+    --light-bg:     #E3F8F9;
+    --mid-bg:       #CCF2F3;
+    --border:       #9FE1CB;
     --gray-bg:      #F8FAFB;
     --gray-text:    #6B7280;
     --grad:         linear-gradient(135deg, #054e6f 0%, #095c6e 50%, #0a696b 100%);
-    --radius:       10px;     /* YOUR border radius */
-    --heading-font: 'Be Vietnam Pro', sans-serif;  /* YOUR heading font */
-    --body-font:    'Nunito Sans', sans-serif;     /* YOUR body font */
+    --radius:       10px;
+    --heading-font: 'Be Vietnam Pro', sans-serif;
+    --body-font:    'Nunito Sans', sans-serif;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -47,7 +42,6 @@
     box-shadow: 0 4px 32px rgba(0,0,0,0.10);
   }
 
-  /* HEADER — update text content below */
   .header {
     background: var(--grad);
     padding: 40px 44px 32px;
@@ -74,16 +68,13 @@
     font-size: 15px; color: var(--mid-bg);
     line-height: 1.6; max-width: 480px;
   }
-  /* CUSTOMIZE: Ex-Agency Digital Marketer */
   .credibility {
     font-size: 12px; color: rgba(255,255,255,0.55);
     margin-top: 14px; font-style: italic;
   }
 
-  /* BODY */
   .body { padding: 36px 44px 44px; }
 
-  /* SECTION TITLE */
   .section-title {
     font-family: var(--heading-font);
     font-weight: 800; font-size: 11px;
@@ -93,10 +84,8 @@
     margin-bottom: 16px; margin-top: 28px; display: block;
   }
 
-  /* CRITERIA PREVIEW */
   .criteria-row {
     display: grid;
-    /* CUSTOMIZE: change repeat(5) to match your criteria count */
     grid-template-columns: repeat(5, 1fr);
     gap: 10px; margin-bottom: 28px;
   }
@@ -115,7 +104,6 @@
   }
   .criterion-max { font-size: 11px; color: var(--gray-text); margin-top: 3px; }
 
-  /* FORM */
   .field-group { margin-bottom: 18px; }
   .field-label {
     font-family: var(--heading-font);
@@ -146,7 +134,6 @@
     color: #B0BEC5; font-style: italic; font-size: 14px;
   }
 
-  /* EMAIL GATE */
   .email-gate {
     display: none;
     background: var(--light-bg);
@@ -178,7 +165,6 @@
   .gate-input:focus { border-color: var(--primary); }
   .gate-input::placeholder { color: #B0BEC5; font-style: italic; }
 
-  /* BUTTONS */
   .btn-primary {
     background: var(--primary); color: #fff;
     border: none; border-radius: 8px;
@@ -194,7 +180,6 @@
 
   .submit-wrap { margin-top: 24px; }
 
-  /* LOADING */
   .loading { display: none; text-align: center; padding: 40px 0; }
   .loading.show { display: block; }
   .spinner {
@@ -211,11 +196,9 @@
     font-size: 15px; font-weight: 700; color: var(--gray-text);
   }
 
-  /* RESULTS */
   .results { display: none; }
   .results.show { display: block; }
 
-  /* VERDICT BANNER */
   .verdict-banner {
     border-radius: 12px; padding: 24px 28px;
     margin-bottom: 24px;
@@ -255,7 +238,6 @@
     text-transform: uppercase; letter-spacing: 1px; margin-top: 3px;
   }
 
-  /* SCORE BARS */
   .score-bar-item {
     background: var(--gray-bg);
     border: 1.5px solid var(--mid-bg);
@@ -291,7 +273,6 @@
     margin-top: 7px; line-height: 1.5; font-style: italic;
   }
 
-  /* INSIGHT CARDS */
   .insight-grid {
     display: grid; grid-template-columns: 1fr 1fr;
     gap: 12px; margin-top: 4px;
@@ -311,7 +292,6 @@
   .insight-card.fix .insight-label { color: #991B1B; }
   .insight-text { font-size: 14px; line-height: 1.65; color: var(--dark); }
 
-  /* RESET */
   .reset-btn {
     background: transparent; color: var(--primary);
     border: 2px solid var(--primary); border-radius: 8px;
@@ -322,7 +302,6 @@
   }
   .reset-btn:hover { background: var(--light-bg); }
 
-  /* ERROR */
   .error-box {
     background: #FEE2E2; border: 1.5px solid #FECACA;
     border-radius: 8px; padding: 14px 18px;
@@ -331,7 +310,6 @@
   }
   .error-box.show { display: block; }
 
-  /* FOOTER */
   .footer {
     background: var(--dark); padding: 14px 44px;
     display: flex; justify-content: space-between; align-items: center;
@@ -358,61 +336,57 @@
 <div class="page">
 
   <div class="header">
-    <!-- CUSTOMIZE: Update brand tag, title, subtitle, credibility signal -->
-    <div class="tool-tag">Jade Janosi</div>
-    <h1>Recipe Scorer for NOVA</h1>
-    <div class="header-sub">Score your recipe based on macro and micronutrients./div>
-    <div class="credibility">Built by Jade Janosi — EX-Agency Digital Marketer</div>
+    <div class="tool-tag">NOVA TOOL LAB</div>
+    <h1>The Recipe Balance Score</h1>
+    <div class="header-sub">Paste in what you're eating. Get an honest read on the nutritional balance and one specific change that actually moves the needle.</div>
+    <div class="credibility">Built with NOVA — scored using a registered dietitian framework</div>
   </div>
 
   <div class="body">
 
-    <!-- CUSTOMIZE: Update criteria icons, names, and count to match your tool -->
     <div class="criteria-row">
       <div class="criterion-item">
-        <div class="criterion-icon">📸 </div>
-        <div class="criterion-name">Photogenic Factor</div>
+        <div class="criterion-icon">🍗</div>
+        <div class="criterion-name">Protein Balance</div>
         <div class="criterion-max">/ 10</div>
       </div>
       <div class="criterion-item">
-        <div class="criterion-icon">⚡</div>
-        <div class="criterion-name">Shareability</div>
+        <div class="criterion-icon">🥦</div>
+        <div class="criterion-name">Micronutrient Variety</div>
         <div class="criterion-max">/ 10</div>
       </div>
       <div class="criterion-item">
-        <div class="criterion-icon">⏱️</div>
-        <div class="criterion-name">Easy to Make</div>
+        <div class="criterion-icon">🥑</div>
+        <div class="criterion-name">Healthy Fats</div>
         <div class="criterion-max">/ 10</div>
       </div>
       <div class="criterion-item">
-        <div class="criterion-icon">💰</div>
-        <div class="criterion-name">Ingredient Cost</div>
+        <div class="criterion-icon">🌾</div>
+        <div class="criterion-name">Fiber Content</div>
         <div class="criterion-max">/ 10</div>
       </div>
       <div class="criterion-item">
-        <div class="criterion-icon">⚡</div>
-        <div class="criterion-name">Criterion Five</div>
+        <div class="criterion-icon">🍬</div>
+        <div class="criterion-name">Sugar & Processed</div>
         <div class="criterion-max">/ 10</div>
       </div>
     </div>
 
     <div id="form-section">
-      <div class="section-title">Tell Us About Your Recipe</div>
+      <div class="section-title">Tell Us About Your Meal</div>
 
-      <!-- CUSTOMIZE: Update label, hint, and placeholder for your tool -->
       <div class="field-group">
-        <span class="field-label">Your main input label</span>
-        <div class="field-hint">A hint that tells users exactly what to type and how detailed to be.</div>
+        <span class="field-label">Paste your recipe or meal</span>
+        <div class="field-hint">List the main ingredients and how it's prepared. The more detail you give, the more accurate the score.</div>
         <textarea class="fi" id="main-input"
-          placeholder="Placeholder text that shows an example of good input..."></textarea>
+          placeholder="Grilled chicken breast, brown rice, steamed broccoli, olive oil, garlic..."></textarea>
       </div>
 
-      <!-- CUSTOMIZE: Add or remove additional input fields as needed -->
       <div class="field-group">
-        <span class="field-label">Optional second input label</span>
-        <div class="field-hint">Hint for what goes here.</div>
+        <span class="field-label">Any dietary goals or restrictions? (optional)</span>
+        <div class="field-hint">Weight loss, muscle gain, low-carb, gluten-free, anything relevant.</div>
         <input type="text" class="fi" id="secondary-input"
-          placeholder="Optional secondary input...">
+          placeholder="e.g., trying to eat higher protein">
       </div>
 
       <div class="submit-wrap">
@@ -425,11 +399,9 @@
       </div>
     </div>
 
-    <!-- EMAIL GATE — shows after form submission, before result -->
     <div class="email-gate" id="email-gate">
       <div class="gate-title">Your score is ready.</div>
-      <!-- CUSTOMIZE: Update this copy for your tool -->
-      <div class="gate-sub">Enter your email to receive your full scored breakdown.</div>
+      <div class="gate-sub">Enter your email to see your full nutritional breakdown.</div>
       <div class="gate-row">
         <input type="email" class="gate-input" id="gate-email"
           placeholder="your@email.com">
@@ -442,14 +414,11 @@
       </div>
     </div>
 
-    <!-- LOADING STATE -->
     <div class="loading" id="loading">
       <div class="spinner"></div>
-      <!-- CUSTOMIZE: Update loading text for your tool -->
-      <div class="loading-text">Scoring your [thing]... about 10 seconds.</div>
+      <div class="loading-text">Scoring your meal... about 10 seconds.</div>
     </div>
 
-    <!-- RESULTS -->
     <div class="results" id="results">
       <div class="section-title">Your Results</div>
 
@@ -462,7 +431,6 @@
         </div>
         <div class="total-score">
           <div class="score-big" id="score-num">—</div>
-          <!-- CUSTOMIZE: Update /50 to match your total possible score -->
           <div class="score-denom">/ 50</div>
           <div class="score-label">Total Score</div>
         </div>
@@ -478,37 +446,32 @@
   </div>
 
   <div class="footer">
-    <!-- CUSTOMIZE: Update brand name and URL -->
-    <div class="footer-brand">YOUR BRAND</div>
-    <div class="footer-url">yourwebsite.com</div>
+    <div class="footer-brand">NOVA</div>
+    <div class="footer-url">jadejanosi.com</div>
   </div>
 
 </div>
 
 <script>
-// ============================================================
-// CUSTOMIZE: Update these arrays to match your criteria
-// Order must match the JSON keys in your system prompt
-// ============================================================
+// Keys below match the JSON keys returned by the nutritionist system prompt exactly.
 const CRITERIA = [
-  { key: 'criterion_one',   label: 'Criterion One',   icon: '🎯' },
-  { key: 'criterion_two',   label: 'Criterion Two',   icon: '🔥' },
-  { key: 'criterion_three', label: 'Criterion Three', icon: '💎' },
-  { key: 'criterion_four',  label: 'Criterion Four',  icon: '📊' },
-  { key: 'criterion_five',  label: 'Criterion Five',  icon: '⚡' },
+  { key: 'protein_balance',        label: 'Protein Balance',        icon: '🍗' },
+  { key: 'micronutrient_variety',  label: 'Micronutrient Variety',  icon: '🥦' },
+  { key: 'healthy_fats',           label: 'Healthy Fats',           icon: '🥑' },
+  { key: 'fiber_content',          label: 'Fiber Content',          icon: '🌾' },
+  { key: 'sugar_and_processed',    label: 'Sugar & Processed',      icon: '🍬' },
 ];
 
-// ============================================================
-// CUSTOMIZE: Update verdict logic to match your tool
-// ============================================================
+// Verdict values from the system prompt are exactly:
+// "Excellent" | "Balanced" | "Needs Work" | "Rethink"
 function getVerdictStyle(verdict) {
   const v = verdict.toLowerCase();
-  if (v.includes('excellent') || v.includes('strong') || v.includes('go')) {
-    return { cls: 'go', icon: '🚀', label: 'Verdict' };
-  } else if (v.includes('rethink') || v.includes('weak') || v.includes('poor')) {
-    return { cls: 'nogo', icon: '🔧', label: 'Verdict' };
+  if (v.includes('excellent') || v.includes('balanced')) {
+    return { cls: 'go', icon: '🥗', label: 'Verdict' };
+  } else if (v.includes('rethink')) {
+    return { cls: 'nogo', icon: '⚠️', label: 'Verdict' };
   }
-  return { cls: 'maybe', icon: '⚡', label: 'Verdict' };
+  return { cls: 'maybe', icon: '🔧', label: 'Verdict' };
 }
 
 let pendingResult = null;
@@ -517,25 +480,20 @@ async function handleSubmit() {
   const mainInput = document.getElementById('main-input').value.trim();
   const secondaryInput = document.getElementById('secondary-input')?.value.trim() || '';
   const errorBox = document.getElementById('error-box');
-  const btn = document.getElementById('submit-btn');
 
   errorBox.classList.remove('show');
 
-  // CUSTOMIZE: Add validation for your required fields
   if (!mainInput) {
-    errorBox.textContent = 'Please fill in the required field before scoring.';
+    errorBox.textContent = 'Please describe your meal before scoring.';
     errorBox.classList.add('show');
     return;
   }
 
-  // Show email gate before making the API call
   document.getElementById('form-section').style.display = 'none';
   document.getElementById('email-gate').classList.add('show');
 
-  // Store inputs for use after email is collected
-  // CUSTOMIZE: Update this to include all your input fields
   pendingResult = {
-    userInput: `Main input: ${mainInput}\nAdditional info: ${secondaryInput}`
+    userInput: `Meal: ${mainInput}\nDietary goals or restrictions: ${secondaryInput || 'none specified'}`
   };
 }
 
@@ -556,8 +514,7 @@ async function handleGate() {
   document.getElementById('email-gate').classList.remove('show');
   document.getElementById('loading').classList.add('show');
 
-  // CUSTOMIZE: Replace with your email platform API call
-  // See Module 4 Lesson 4.5 for the email capture implementation
+  // Replace with your email platform API call (Brevo, etc.)
   // await captureEmail(email);
 
   try {
@@ -585,7 +542,6 @@ async function handleGate() {
 function displayResults(r) {
   document.getElementById('loading').classList.remove('show');
 
-  // Set verdict banner
   const style = getVerdictStyle(r.verdict || '');
   const banner = document.getElementById('verdict-banner');
   banner.className = `verdict-banner ${style.cls}`;
@@ -595,7 +551,6 @@ function displayResults(r) {
   document.getElementById('verdict-desc').textContent = r.top_strength || '';
   document.getElementById('score-num').textContent = r.total || '—';
 
-  // Score bars
   const barsEl = document.getElementById('score-bars');
   barsEl.innerHTML = '';
   CRITERIA.forEach(c => {
@@ -618,20 +573,18 @@ function displayResults(r) {
       </div>`;
   });
 
-  // Insights
   document.getElementById('insight-grid').innerHTML = `
     <div class="insight-card strength">
       <div class="insight-label">Top Strength</div>
       <div class="insight-text">${r.top_strength || '—'}</div>
     </div>
     <div class="insight-card fix">
-      <div class="insight-label">Priority Fix</div>
-      <div class="insight-text">${r.priority_fix || '—'}</div>
+      <div class="insight-label">One Change To Make</div>
+      <div class="insight-text">${r.one_change || '—'}</div>
     </div>`;
 
   document.getElementById('results').classList.add('show');
 
-  // Animate bars
   setTimeout(() => {
     document.querySelectorAll('.bar-fill').forEach(bar => {
       bar.style.width = bar.dataset.pct + '%';
@@ -654,7 +607,6 @@ function resetTool() {
   window.scrollTo(0, 0);
 }
 
-// Allow Enter key to submit
 document.addEventListener('keydown', e => {
   if (e.key === 'Enter' && e.ctrlKey) handleSubmit();
 });
